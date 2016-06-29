@@ -1,7 +1,7 @@
 // Variables ========================
 var fs = require("fs");
 
-var keys = require("/keys.js");
+var keys = require("./keys.js");
 
 var request = require("request");
 
@@ -17,11 +17,12 @@ var twitLogin = new twitter ({
   consumer_key: keys.twitterKeys.consumer_key,
   consumer_secret: keys.twitterKeys.consumer_secret,
   access_token_key: keys.twitterKeys.access_token_key,
-  access_token_secret: keys.twitterKeys.access_token_secret,
+  access_token_secret: keys.twitterKeys.access_token_secret
 });
 
 if (userInput == "my-tweets") {
-  var params = { screen_name: "tgreen304" };
+  var params = { screen_name: "@TGreen304" };
+  //console.log(params);
   twitLogin.get("statuses/user_timeline", params, function(error, tweets, response) {
       if (!error) {
         console.log(tweets);
