@@ -21,11 +21,18 @@ var twitLogin = new twitter ({
 });
 
 if (userInput == "my-tweets") {
-
+  var params = { screen_name: "tgreen304" };
+  twitLogin.get("statuses/user_timeline", params, function(error, tweets, response) {
+      if (!error) {
+        console.log(tweets);
+      } else {
+        console.log("error: 400");
+      }
+  });
 }
 
-spotify-this-song
+//spotify-this-song
 
-movie-this
+//movie-this
 
-do-what-it-says
+//do-what-it-says
