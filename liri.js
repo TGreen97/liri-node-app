@@ -110,4 +110,27 @@ if (userInput == "movie-this") {
       }
   });
 }
-//do-what-it-says
+// ======= Do-what-it-says
+if (userInput == "do-what-it-says") {
+  fs.readFile("random.txt", "utf8", function(err,data) {
+
+    console.log(data);
+
+    var dataArr = data.split(",");
+
+    console.log(dataArr);
+  });
+}
+
+  /*var nodeArgs = process.argv;
+  var movieName = "";
+  for (var i=3; i<nodeArgs.length; i++) {
+    if (i>3 && i<nodeArgs.length) {
+      movieName = movieName + "+" + nodeArgs[i];
+    } else {
+      movieName = movieName + nodeArgs[i];
+    }
+  }
+  if (movieName === undefined) {
+    movieName = "Mr Nobody";
+  } */
