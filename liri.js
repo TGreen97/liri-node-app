@@ -42,7 +42,15 @@ if (userInput == "my-tweets") {
 
 // ======== SPOTIFY
 if (userInput == "spotify") {
-  var trackName = process.argv[3];
+  var nodeArgs = process.argv;
+  var trackName = "";
+  for (var i=3; i<nodeArgs.length; i++) {
+    if (i>3 && i<nodeArgs.length) {
+      trackName = trackName + "+" + nodeArgs[i];
+    } else {
+      trackName = trackName + nodeArgs[i];
+    }
+  }
   //console.log(params);
   if (trackName === undefined) {
     trackName = "what's my age again";
