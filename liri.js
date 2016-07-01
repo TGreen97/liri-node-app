@@ -12,7 +12,7 @@ var spotify = require("spotify");
 var userInput = process.argv[2];
 
 // Functions/Arguments =========================
-
+// ====== TWITTER
 var twitLogin = new twitter ({
   consumer_key: keys.twitterKeys.consumer_key,
   consumer_secret: keys.twitterKeys.consumer_secret,
@@ -21,18 +21,48 @@ var twitLogin = new twitter ({
 });
 
 if (userInput == "my-tweets") {
-  var params = { screen_name: "@TGreen304" };
+  var params = {
+      screen_name: "TGreen304",
+      trim_user: true,
+      count: 20 };
   //console.log(params);
   twitLogin.get("statuses/user_timeline", params, function(error, tweets, response) {
       if (!error) {
-        console.log(tweets);
-      } else {
-        console.log("error: 400");
-      }
+        for (i = 0; i < 20; i++)
+          {
+          console.log(tweets[i].text);
+          console.log(tweets[i].created_at);
+          console.log("\n================\n");
+          }
+      } /*else {
+            console.log(error);
+        };*/
   });
 }
 
-//spotify-this-song
+// ======== SPOTIFY
+if (userInput == "spotify") {
+  var trackName = process.argv[3];
+  //console.log(params);
+  if (trackName === undefined) {
+    trackName = "what's my age again";
+  }
+  spotify.search ({
+    type: "track",
+    query: trackName
+  } function(err, data) {
+      if (err) {
+        console.log(err);
+        return;
+      } else {
+          console.log(tweets[i].text);
+          console.log(tweets[i].created_at);
+          console.log("\n================\n");
+      } /*else {
+            console.log(error);
+        };*/
+  });
+}
 
 //movie-this
 
