@@ -41,7 +41,7 @@ if (userInput == "my-tweets") {
 }
 
 // ======== SPOTIFY
-if (userInput == "spotify") {
+if (userInput == "spotify-this-song") {
   var nodeArgs = process.argv;
   var trackName = "";
   for (var i=3; i<nodeArgs.length; i++) {
@@ -51,7 +51,6 @@ if (userInput == "spotify") {
       trackName = trackName + nodeArgs[i];
     }
   }
-  //console.log(params);
   if (trackName === undefined) {
     trackName = "what's my age again";
   }
@@ -77,6 +76,38 @@ if (userInput == "spotify") {
   });
 }
 
-//movie-this
+// ======= OMDB
+if (userInput == "movie-this") {
+  var nodeArgs = process.argv;
+  var movieName = "";
+  for (var i=3; i<nodeArgs.length; i++) {
+    if (i>3 && i<nodeArgs.length) {
+      movieName = movieName + "+" + nodeArgs[i];
+    } else {
+      movieName = movieName + nodeArgs[i];
+    }
+  }
+  if (movieName === undefined) {
+    movieName = "Mr Nobody";
+  }
 
+  var queryURL = 'http://www.omdbapi.com/?t=' + movieName +'&y=&plot=short&tomatoes=true&r=json';
+
+  request(queryURL, function(error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log("\n==OMDB RESULTS==\n");
+        console.log("Film Title: " + JSON.parse(body)["Title"]);
+        console.log("Release Year: " + JSON.parse(body)["Year"]);
+        console.log("IMDB Rating: " + JSON.parse(body)["imdbRating"]);
+        console.log("Country of Origin: " + JSON.parse(body)["Country"]);
+        console.log("Language: " + JSON.parse(body)["Language"]);
+        console.log("Plot: " + JSON.parse(body)["Plot"]);
+        console.log("Actors: " + JSON.parse(body)["Actors"]);
+        console.log("Rotten Tomatoes Rating: " + JSON.parse(body)["tomatoRating"]);
+        console.log("\n===================\n");
+      } else {console.log(error);
+        return;
+      }
+  });
+}
 //do-what-it-says
