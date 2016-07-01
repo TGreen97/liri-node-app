@@ -47,18 +47,23 @@ if (userInput == "spotify") {
   if (trackName === undefined) {
     trackName = "what's my age again";
   }
+
   spotify.search ({
     type: "track",
     query: trackName
-  } function(err, data) {
+    }, function(err, data) {
       if (err) {
         console.log(err);
         return;
       } else {
-          console.log(tweets[i].text);
-          console.log(tweets[i].created_at);
-          console.log("\n================\n");
-      } /*else {
+          console.log("\n==SPOTIFY RESULTS==\n");
+          console.log("Track Name: " + data.tracks.items[0].name);
+          console.log("Artist: " + data.tracks.items[0].artists[0].name);
+          console.log("Album: " + data.tracks.items[0].album.name)
+          console.log("Listen: " + data.tracks.items[0].preview_url);
+          console.log("\n===================\n");
+      }
+        /*else {
             console.log(error);
         };*/
   });
