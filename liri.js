@@ -131,9 +131,9 @@ function getDoIt() {
 
       console.log(dataArr);
 
-      var userInput = dataArr[0];
+      var userInput = dataArr[0].trim();
       console.log(userInput);
-      var userQuery = dataArr[1];
+      var userQuery = dataArr[1].trim();
       console.log(userQuery);
       /*for (var i=1; i<dataArr.length; i++) {
         if (i>1 && i<dataArr.length) {
@@ -149,7 +149,6 @@ function getDoIt() {
         break;
 
         case "spotify-this-song":
-            var userQuery = dataArr[1];
             getSpotify();
         break;
 
