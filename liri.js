@@ -11,16 +11,44 @@ var spotify = require("spotify");
 
 var userInput = process.argv[2];
 
-// Functions/Arguments =========================
-// ====== TWITTER
-var twitLogin = new twitter ({
-  consumer_key: keys.twitterKeys.consumer_key,
-  consumer_secret: keys.twitterKeys.consumer_secret,
-  access_token_key: keys.twitterKeys.access_token_key,
-  access_token_secret: keys.twitterKeys.access_token_secret
-});
+var nodeArgs = process.argv;
+var userQuery = "";
+for (var i=3; i<nodeArgs.length; i++) {
+  if (i>3 && i<nodeArgs.length) {
+    userQuery = userQuery + "+" + nodeArgs[i];
+  } else {
+    userQuery = userQuery + nodeArgs[i];
+  }
+}
 
-if (userInput == "my-tweets") {
+// Functions/Arguments =========================
+
+switch(userInput) {
+    case "my-tweets":
+        getTwitter();
+    break;
+
+    case "spotify-this-song":
+        getSpotify();
+    break;
+
+    case "movie-this":
+        getMovie();
+    break;
+
+    case "do-what-it-says":
+        getDoIt();
+    break;
+}
+// ====== TWITTER
+function getTwitter() {
+  var twitLogin = new twitter ({
+    consumer_key: keys.twitterKeys.consumer_key,
+    consumer_secret: keys.twitterKeys.consumer_secret,
+    access_token_key: keys.twitterKeys.access_token_key,
+    access_token_secret: keys.twitterKeys.access_token_secret
+  });
+
   var params = {
       screen_name: "TGreen304",
       trim_user: true,
@@ -39,25 +67,15 @@ if (userInput == "my-tweets") {
         };*/
   });
 }
-
 // ======== SPOTIFY
-if (userInput == "spotify-this-song") {
-  var nodeArgs = process.argv;
-  var trackName = "";
-  for (var i=3; i<nodeArgs.length; i++) {
-    if (i>3 && i<nodeArgs.length) {
-      trackName = trackName + "+" + nodeArgs[i];
-    } else {
-      trackName = trackName + nodeArgs[i];
-    }
-  }
-  if (trackName === undefined) {
-    trackName = "what's my age again";
+function getSpotify() {
+  if (userQuery == undefined) {
+    userQuery = "what's my age again";
   }
 
   spotify.search ({
     type: "track",
-    query: trackName
+    query: userQuery
     }, function(err, data) {
       if (err) {
         console.log(err);
@@ -77,21 +95,12 @@ if (userInput == "spotify-this-song") {
 }
 
 // ======= OMDB
-if (userInput == "movie-this") {
-  var nodeArgs = process.argv;
-  var movieName = "";
-  for (var i=3; i<nodeArgs.length; i++) {
-    if (i>3 && i<nodeArgs.length) {
-      movieName = movieName + "+" + nodeArgs[i];
-    } else {
-      movieName = movieName + nodeArgs[i];
-    }
-  }
-  if (movieName === undefined) {
-    movieName = "Mr Nobody";
+function getMovie() {
+  if (userQuery == undefined) {
+    userQuery = "Mr Nobody";
   }
 
-  var queryURL = 'http://www.omdbapi.com/?t=' + movieName +'&y=&plot=short&tomatoes=true&r=json';
+  var queryURL = 'http://www.omdbapi.com/?t=' + userQuery +'&y=&plot=short&tomatoes=true&r=json';
 
   request(queryURL, function(error, response, body) {
       if (!error && response.statusCode == 200) {
@@ -111,26 +120,43 @@ if (userInput == "movie-this") {
   });
 }
 // ======= Do-what-it-says
-if (userInput == "do-what-it-says") {
+function getDoIt() {
   fs.readFile("random.txt", "utf8", function(err,data) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(data);
 
-    console.log(data);
+      var dataArr = data.split(', ');
 
-    var dataArr = data.split(",");
+      console.log(dataArr);
 
-    console.log(dataArr);
+      var userInput = dataArr[0];
+      console.log(userInput);
+      var userQuery = dataArr[1];
+      console.log(userQuery);
+      /*for (var i=1; i<dataArr.length; i++) {
+        if (i>1 && i<dataArr.length) {
+          userQuery = userQuery + "+" + dataArr[i];
+        } else {
+          userQuery = userQuery + dataArr[i];
+        }
+      }; */
+
+      switch(userInput) {
+        case "my-tweets":
+            getTwitter();
+        break;
+
+        case "spotify-this-song":
+            var userQuery = dataArr[1];
+            getSpotify();
+        break;
+
+        case "movie-this":
+            getMovie();
+        break;
+      }
+    }
   });
 }
-
-  /*var nodeArgs = process.argv;
-  var movieName = "";
-  for (var i=3; i<nodeArgs.length; i++) {
-    if (i>3 && i<nodeArgs.length) {
-      movieName = movieName + "+" + nodeArgs[i];
-    } else {
-      movieName = movieName + nodeArgs[i];
-    }
-  }
-  if (movieName === undefined) {
-    movieName = "Mr Nobody";
-  } */
