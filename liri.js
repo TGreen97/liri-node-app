@@ -82,6 +82,7 @@ function getSpotify() {
         return;
       } else {
           console.log("\n==SPOTIFY RESULTS==\n");
+          console.log(userQuery);
           console.log("Track Name: " + data.tracks.items[0].name);
           console.log("Artist: " + data.tracks.items[0].artists[0].name);
           console.log("Album: " + data.tracks.items[0].album.name)
@@ -131,9 +132,9 @@ function getDoIt() {
 
       console.log(dataArr);
 
-      var userInput = dataArr[0].trim();
+      userInput = dataArr[0].trim();
       console.log(userInput);
-      var userQuery = dataArr[1].trim();
+      userQuery = dataArr[1].trim();
       console.log(userQuery);
       /*for (var i=1; i<dataArr.length; i++) {
         if (i>1 && i<dataArr.length) {
